@@ -1,1 +1,1 @@
-solution = lambda _, m, s: sum(sorted(s)[-m::-m]) * m
+solution = lambda _, m, score:  sum(sorted(score)[-m::-m]) * m
