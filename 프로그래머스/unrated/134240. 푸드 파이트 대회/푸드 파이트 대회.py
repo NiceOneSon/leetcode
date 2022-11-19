@@ -1,0 +1,1 @@
+solution = lambda food : ''.join([ str(ind) * (f // 2) for ind, f in enumerate(food[1:], start = 1)]) + '0' + ''.join([ str(ind) * (f // 2) for ind, f in enumerate(food[1:], start = 1)])[::-1]
