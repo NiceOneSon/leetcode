@@ -18,7 +18,7 @@ def dfs(node, visited, routes):
     for nextnode in child:
         need, bright = dfs(nextnode, visited, routes)
         needs |= need
-        brights &= bright
+        brights |= bright
 
     # 자식이 하나라도 켜달라고 할 경우
         # 부모는 등대 O, 부모는 return 시 킬 필요 없다고 전달
@@ -30,8 +30,8 @@ def dfs(node, visited, routes):
     if needs:
         answer += 1
         return False, True
-    if brights:
-        return False, False
+    # if brights:
+    #     return False, False
     return True, False
 
 def solution(n, lighthouse):
