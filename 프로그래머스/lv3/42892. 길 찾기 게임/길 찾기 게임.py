@@ -5,9 +5,7 @@ sys.setrecursionlimit(10**6)
 def solution(nodeinfo):
     answer = [[]]
     q = []
-    for ind, (x, y) in enumerate(nodeinfo, start = 1):
-        heapq.heappush(q, (-y, x, ind))
-        
+    
     class Node:
         def __init__(self, num, y, x, left, right):
             self.num = num
@@ -45,23 +43,23 @@ def solution(nodeinfo):
                 backward.extend(num[1])
             backward.extend([self.num])
             return [forward, backward]
-            
-    prevnode = None
+        
+        
+    for ind, (x, y) in enumerate(nodeinfo, start = 1):
+        heapq.heappush(q, (-y, x, ind))
+        
+
     root = None
     while q:
         y, x, num = heapq.heappop(q)
         y *= -1
         node = Node(num, y, x, None, None)
-        if prevnode == None:
+        if not root:
             root = node
-            prevnode = node
         else:
-            prevnode = root.findnode(root, y, x)            
-            if prevnode.x > x:
-                prevnode.left = node
+            parent = root.findnode(root, y, x)            
+            if parent.x > x:
+                parent.left = node
             else:
-                prevnode.right = node
-    
-    
-    
+                parent.right = node
     return root.get_nodes()
