@@ -1,41 +1,44 @@
 from bisect import bisect_left
 
-def solution(info, query):
+def solution(infos, querys):
     answer = []
+    dictionary = {
+        '-' : 0, 'cpp' : 1, 'java' : 2, 'python' : 3,
+        'backend' : 1, 'frontend' : 2,
+        'junior' : 1, 'senior' : 2,
+        'chicken' : 1, 'pizza' : 2
+    }
     
-    hash = {'-' : 0, 'cpp' : 1, 'java' : 2, 'python' : 3,
-           'backend' : 1, 'frontend' : 2,
-           'junior' : 1,  'senior' : 2,
-           'chicken' : 1, 'pizza' : 2
-           }
+    arr = [[] for i in range(4*3*3*3)]
     
-    result = [[] for _ in range((4*3*3*3))]
+    for info in infos:
+        program, posi, peri, els, score = info.split(' ')
+        score = int(score)
+        program = dictionary[program] * (3**3)
+        posi = dictionary[posi] * (3**2)
+        peri = dictionary[peri] * (3)
+        els = dictionary[els]
+        cols = [program, posi, peri, els]
+        for num in range(1<<4):
+            col = 0
+            for ind in range(4):
+                if num & 1 << ind:
+                    col += cols[ind]
+            arr[col].append(score)
+        
+    for row in arr:
+        if row:
+            row.sort()
     
-    for infor in info:
-        tmp = []
-        p, j, l, i, sc = infor.split(' ')
-        arr = [hash[p] * 27
-              ,hash[j] * 9
-              ,hash[l] * 3
-              ,hash[i]
-              ,int(sc)]
-        lists = []
-        for i in range(1 << 4):
-            summation = 0
-            for j in range(4):
-                if i & (1 << j):
-                    summation += arr[j]
-            result[summation].append(arr[4])
-            
-    for ind in range(len(result)):
-        result[ind].sort()
-
-    for q in query:
-        q = q.split(' ')
-        ind = hash[q[0]] * 27 + hash[q[2]] * 9 + hash[q[4]] * 3 + hash[q[6]]
-        score = int(q[7])
-        answer.append(len(result[ind]) - bisect_left(result[ind], score))
-    
-    
+    for query in querys:
+        program, posi, peri, els = query.split(' and ')
+        els, score = els.split(' ')
+        score = int(score)
+        program = dictionary[program] * (3**3)
+        posi = dictionary[posi] * (3**2)
+        peri = dictionary[peri] * (3)
+        els = dictionary[els]
+        cols = program + posi + peri + els
+        answer.append(len(arr[cols]) - bisect_left(arr[cols], score))
     
     return answer
