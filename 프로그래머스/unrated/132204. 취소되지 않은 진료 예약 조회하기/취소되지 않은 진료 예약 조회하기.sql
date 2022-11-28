@@ -1,0 +1,15 @@
+-- 코드를 입력하세요
+SELECT B.APNT_NO,
+       A.PT_NAME,
+       A.PT_NO,
+       C.MCDP_CD,
+       C.DR_NAME,
+       B.APNT_YMD
+  FROM PATIENT A, DOCTOR C, APPOINTMENT B
+ WHERE A.PT_NO = B.PT_NO
+   AND C.DR_ID = B.MDDR_ID
+   AND B.MCDP_CD = 'CS'
+   AND B.APNT_CNCL_YN = 'N'
+   AND B.APNT_YMD BETWEEN TO_DATE('2022-04-13 00:00:00', 'YYYY-MM-DD HH24-MI-SS')
+                      AND TO_DATE('2022-04-13 23:59:59', 'YYYY-MM-DD HH24-MI-SS')
+ ORDER BY apnt_ymd
