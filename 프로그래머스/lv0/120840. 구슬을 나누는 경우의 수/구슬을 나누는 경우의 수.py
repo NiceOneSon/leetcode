@@ -1,3 +1,2 @@
 from math import comb
-def solution(balls, share):
-    return comb(balls, share)
+solution = lambda b, s : comb(b, s)
