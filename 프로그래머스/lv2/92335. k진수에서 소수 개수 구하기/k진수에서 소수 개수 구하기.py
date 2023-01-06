@@ -1,22 +1,23 @@
 def solution(n, k):
-    transformed = ''
-    while n:
-        tmp = str(n % k)
-        transformed = tmp + transformed
-        n //= k
-    left = 0
-    def check(num):
-        if num == 1:
-            return True
-        for i in range(2, int(num ** 0.5) + 1):
-            if num % i == 0:
-                return True
-        return False
-    answer = 0
-    for num in transformed.split('0'):
-        if not num:
+    def trans(n, k):
+        answer = ''
+        while n:
+            answer += str(n % k)
+            n //= k
+        return answer[::-1].split('0')
+    def prime(n):
+        for num in range(2, int(n**0.5)+1):
+            if n % num == 0:
+                return False
+        return True
+            
+    nums = trans(n, k)
+    answer = 0 
+    for num in nums:
+        if not num or num == '1':
             continue
-        if check(int(num)) == False:
-            print(num)
+        num = int(num)
+        if prime(num):
+            
             answer += 1
     return answer
