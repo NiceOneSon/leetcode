@@ -8,8 +8,10 @@ def solution(book_time):
     for f, t in book_time:
         f = get_min(f)
         t = get_min(t)
-        print(f, t)
-        for time in range(f, t+10):
-            DP[time] += 1
-        
-    return max(DP)
+        DP[f] += 1
+        DP[t+10] -= 1
+    tmp = 0
+    for ind in range(len(DP)):
+        tmp += DP[ind]
+        answer = max(answer, tmp)
+    return answer
