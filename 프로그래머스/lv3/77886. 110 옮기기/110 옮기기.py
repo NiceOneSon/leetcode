@@ -1,34 +1,27 @@
 def extract(num):
-    stack = ''
-    tmp = 0
+    cnt = 0
+    result = ''
     for i in range(len(num)):
-        stack += num[i]
-        if len(stack) >= 3 and stack[-3:] == '110':
-            stack = stack[:-3]
-            tmp += 1
-    return stack, tmp
+        result += num[i]
+        if result[-3:] == '110':
+            result = result[:-3]
+            cnt += 1
+    return cnt, result
 
-def load(num, tmp):
-    for i in range(len(num)):
-        if num[i:i+2] == '11': # 앞
-            return num[:i] + '110' * tmp + num[i:]
-        elif num[i] == '1' and i == (len(num) - 1): # 앞
-            return num[:i] + '110' * tmp + num[i:]
-        elif num[i:i+3] == '011': # 사이
-            return num[:i+1] + '110' * tmp + num[i+1:]
-    # 뒤
-    return num + '110' * tmp
+def find(num):
+    ind = 0 
+    for ind in range(len(num)):
+        if num[ind:ind+2] == '11':
+            return ind
+        elif num[ind] == '1' and ind == (len(num) - 1):
+            return ind
+    return len(num)
             
-    
-        
-def solution(numbers):
+
+def solution(s):
     answer = []
-    for num in numbers:
-        if len(num) < 3:
-            answer.append(num)
-            continue
-        num, tmp = extract(num)
-        num = load(num, tmp)
-        answer.append(num)
-        
+    for num in s:
+        cnt, num = extract(num)
+        ind = find(num)
+        answer.append(num[:ind] + '110' * cnt + num[ind:])
     return answer
