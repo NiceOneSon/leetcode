@@ -1,34 +1,40 @@
-import heapq
-from collections import defaultdict
 import sys
-input = sys.stdin.readline
+import heapq
 
-V, E = map(int, input().split(' '))
-K = int(input())
-INF = float('inf')
-routes = defaultdict(lambda : INF)
-routes[(K, K)] = 0
-linked = defaultdict(list)
-q = []
 
-for i in range(E):
-    u, v, w = map(int, input().split(' '))
-    if routes[(u, v)] > w:
-        routes[(u, v)] = w
-        linked[u].append(v)
-    if u == K:
-        heapq.heappush(q, (w, v))
+sys.setrecursionlimit(10 ** 9)
+read = sys.stdin.readline
+def write(*args):
+    for arg in args:
+        sys.stdout.write(str(arg))
 
-while q:
-    cost, node = heapq.heappop(q)
-    for nextnode in linked[node]:
-        if routes[(K, nextnode)] > routes[(node, nextnode)] + cost:
-            routes[(K, nextnode)] = routes[(node, nextnode)] + cost
-            heapq.heappush(q, (routes[(K, nextnode)], nextnode))
 
-for node in range(1, V+1):
-    val = routes[(K, node)]
-    if val == INF:
-        print('INF')
-    else:
-        print(val)
+def solve():
+    V, E = map(int, read().split())
+    K = int(read())
+    graph = [[] for _ in range(V + 1)]
+    for _ in range(E):
+        u, v, w = map(int, read().split())
+        graph[u].append((w, v))
+
+    INF = int(1e9)
+    
+    costs = [INF for _ in range(V + 1)]
+    costs[K] = 0
+    q = []
+    heapq.heappush(q, (0, K))
+    while q:
+        cost, node = heapq.heappop(q)
+        if (costs[node] < cost):
+            continue
+        for nc, nn in graph[node]:
+            total = nc + cost
+            if (total < costs[nn]):
+                costs[nn] = total
+                heapq.heappush(q, (total, nn))
+
+    write('\n'.join(map(lambda x: 'INF' if (x == INF) else str(x), costs[1:])))
+
+
+if __name__ == '__main__':
+    solve()
