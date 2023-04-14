@@ -1,17 +1,9 @@
-def findMax(arr):
-    cache = [None] * len(arr)
-    # 1.
-    cache[0] = arr[0]
-
-    # 2.
-    for i in range(1, len(arr)):
-        cache[i] = max(0, cache[i-1]) + arr[i]
-
-    return max(cache)
-
-        
 def solution(sequence):
-    result = findMax([sequence[i] * (1 if i%2 else -1) for i in range(len(sequence))])
-    result = max(result, findMax([sequence[i] * (-1 if i%2 else 1) for i in range(len(sequence))]))
-    
-    return result
+    DP1 = [0] * len(sequence)
+    DP2 = [0] * len(sequence)
+    for i in range(len(sequence)):
+        boolean = i%2
+        alpha = 1 if boolean else -1
+        DP1[i] = max(DP1[i], DP1[i-1] + sequence[i]*alpha)
+        DP2[i] = max(DP2[i], DP2[i-1] + sequence[i]*(-1*alpha))
+    return max(max(DP1), max(DP2))
