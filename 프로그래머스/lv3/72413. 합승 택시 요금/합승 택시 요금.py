@@ -1,20 +1,40 @@
 import heapq
 
 def solution(n, s, a, b, fares):
-    d = [ [ 20000001 for _ in range(n) ] for _ in range(n) ]
-    for x in range(n):
-        d[x][x] = 0
-    for x, y, c in fares:
-        d[x-1][y-1] = c
-        d[y-1][x-1] = c
-
-    for i in range(n):
-        for j in range(n):
-            for k in range(n):
-                if d[j][k] > d[j][i] + d[i][k]:
-                    d[j][k] = d[j][i] + d[i][k]
-
-    minv = 40000002
-    for i in range(n):
-        minv = min(minv, d[s-1][i]+d[i][a-1]+d[i][b-1])
-    return minv
+    answer = 0
+    INF = float('inf')
+    routes = [[INF] * (n+1) for _ in range(n+1)]
+    
+    def dijkstra():
+        q = []
+        for i in range(n+1):
+            routes[i][i] = 0
+        
+        for a, b, cost in fares:
+            routes[a][b] = cost
+            routes[b][a] = cost
+        for s in range(1, n+1):
+            for t in range(1, n+1):
+                if s == t:
+                    continue
+                if routes[s][t] != INF:
+                    heapq.heappush(q, (routes[s][t], s, t))
+        
+                
+        while q:
+            cost, s, t = heapq.heappop(q)
+            for othernode in range(1, n+1):
+                if routes[s][othernode] > cost + routes[t][othernode]:
+                    heapq.heappush(q, (cost + routes[t][othernode], s, othernode))
+                    routes[s][othernode] = cost + routes[t][othernode]
+                    routes[othernode][s] = cost + routes[t][othernode]
+                    
+                
+        return routes
+    
+    routes = dijkstra()
+    answer = routes[s][a]+routes[s][b]
+    for node in range(1, n+1):
+        answer = min(answer, routes[s][node] + routes[node][a] + routes[node][b])
+    
+    return answer
