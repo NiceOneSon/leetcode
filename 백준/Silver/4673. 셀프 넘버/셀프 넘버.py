@@ -1,14 +1,23 @@
-n = 10000
-DP = [False] * (n+1)
-for num in range(1, n):
-    ind = num
+def getSelfNum(num):
+    answer = num
     while num:
-        rest = num % 10
-        ind += rest
+        one = num % 10
+        answer += one
         num //= 10
-    if ind < 10000:
-        DP[ind] = True
+    return answer
 
-for i in range(1, 10000):
-    if DP[i] == False:
-        print(i)
+maxnum = 10000
+routes = [False] * maxnum
+
+
+for num in range(1, maxnum):
+    nextnum = getSelfNum(num)
+    if nextnum < maxnum:
+        routes[nextnum] = True
+
+    if routes[num]:
+        continue
+    print(num)
+    
+    
+    
