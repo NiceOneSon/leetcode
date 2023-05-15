@@ -1,26 +1,23 @@
-
 import sys
 input = sys.stdin.readline
 
-R, C = map(int, input().split(' '))
+R, C = map(int, input().split())
+board = [input().strip() for _ in range(R)]
 
-dy, dx = (-1, 1, 0, 0), (0, 0, -1, 1)
+stack = set([(0, 0, board[0][0])])
+maxLen = 0
 
-routes = [list(input()) for _ in range(R)]
-dupli = set()
-answer = 0
-def dfs(y, x):
-    global answer
-    dupli.add(routes[y][x])
-    answer = max(answer, len(dupli))
-    for i in range(4):
-        sy, sx = y+dy[i], x+dx[i]
-        if not(0<=sy<R and 0<=sx<C):
-            continue
-        if routes[sy][sx] in dupli:
-            continue
-        dfs(sy, sx)
-    dupli.remove(routes[y][x])
+dir = [(0,1), (1,0), (-1,0), (0, -1)]
+while stack:
+    i, j, visited = stack.pop()
 
-dfs(0, 0)
-print(answer)
+    if maxLen < len(visited):
+        maxLen = len(visited)
+        if maxLen == 26 or maxLen == R*C:
+            break
+    
+    for di, dj in dir:
+        ni, nj = i+di, j+dj
+        if 0<=ni<R and 0<=nj<C and not board[ni][nj] in visited:
+            stack.add((ni, nj, visited+board[ni][nj]))
+print(maxLen)
