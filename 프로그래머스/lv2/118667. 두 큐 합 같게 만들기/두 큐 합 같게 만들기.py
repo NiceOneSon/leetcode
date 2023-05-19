@@ -1,25 +1,25 @@
 from collections import deque
+
 def solution(queue1, queue2):
-    queue1, queue2 = deque(queue1), deque(queue2)
-    sum1, sum2 = sum(queue1), sum(queue2)
+    q1, q2 = deque(queue1), deque(queue2)
+    s1, s2 = sum(queue1), sum(queue2)
     answer = 0
-    for _ in range(2*(len(queue1) + len(queue2))):
-        if sum1 == sum2:
-            break
-        elif sum1 > sum2:
-            popped = queue1.popleft()
-            queue2.append(popped)
-            sum1 -= popped
-            sum2 += popped
+    limit = len(q1) + len(q2)
+    limit *= 3
+    while s1 != s2 and limit:
+        limit -= 1
+        if s1 > s2:
+            num = q1.popleft()
+            q2.append(num)
+            s1 -= num
+            s2 += num
         else:
-            popped = queue2.popleft()
-            queue1.append(popped)
-            sum2 -= popped
-            sum1 += popped
+            num = q2.popleft()
+            q1.append(num)
+            s2 -= num
+            s1 += num
         answer += 1
-        
-    if sum1 != sum2:
-        return -1
             
-    
+    if s1 != s2:
+        return -1
     return answer
