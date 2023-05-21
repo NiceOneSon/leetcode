@@ -1,33 +1,38 @@
+import heapq
 def solution(cap, n, deliveries, pickups):
     answer = 0
-    # 가장 거리가 먼 집부터 완료해 나가야함.
-    deliveries = [[ind, val] for ind, val in enumerate(deliveries, start = 1) if val > 0]
-    pickups = [[ind, val] for ind, val in enumerate(pickups, start = 1) if val > 0]
-
-    def delivery(capa, arr):
-        result = 0
-        while capa and arr:
-            ind, val = arr.pop()
-            result = max(result, ind)
-            if val > capa:
-                arr.append([ind, val - capa])
-                break
+    deliveries = [(-ind, val) for ind, val in enumerate(deliveries, start = 1) if val]
+    pickups = [(-ind, val) for ind, val in enumerate(pickups, start = 1) if val]
+    
+    heapq.heapify(deliveries)
+    heapq.heapify(pickups)
+    
+    while deliveries or pickups:
+        delcapa = cap
+        distance = 0
+        while deliveries and delcapa:
+            dis, boxes = heapq.heappop(deliveries)
+            distance = max(distance, -dis)
+            if boxes == delcapa:
+                delcapa = 0
+            elif boxes > delcapa:
+                boxes -= delcapa
+                heapq.heappush(deliveries, (dis, boxes))
+                delcapa = 0
             else:
-                capa -= val
-        return result
-    
-    while deliveries and pickups:
-        ind1 = delivery(cap, deliveries)
-        ind2 = delivery(cap, pickups)
-        answer += (max(ind1, ind2) * 2)
-        
-    while deliveries:
-        ind = delivery(cap, deliveries)
-        answer += ind * 2
-        
-    while pickups:
-        ind = delivery(cap, pickups)
-        answer += ind * 2
-    
-        
+                delcapa -= boxes
+                
+        pickcapa = cap
+        while pickups and pickcapa:
+            dis, boxes = heapq.heappop(pickups)
+            distance = max(distance, -dis)
+            if boxes == pickcapa:
+                pickcapa = 0
+            elif boxes > pickcapa:
+                boxes -= pickcapa
+                heapq.heappush(pickups, (dis, boxes))
+                pickcapa = 0
+            else:
+                pickcapa -= boxes
+        answer += distance * 2
     return answer
