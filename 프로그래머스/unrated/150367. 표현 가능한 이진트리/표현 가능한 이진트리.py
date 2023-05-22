@@ -1,41 +1,39 @@
 import math
+def makeaTree(string):
+    while math.log2(len(string) + 1) % 1 > 0:
+        string = '0' + string
+    return string
 
-def getbinary(number):
-    result = ''
-    while number:
-        result += str(number % 2)
-        number //= 2
-    return result[::-1]
-
-def transform(number, ind): # return : (number, length)
-    pos = ind + 1
-    right_len = len(number) - pos + 1
-    return '0' * (right_len - pos) + number, right_len - 1
-    
-
-def recur(number, mid, length):
-    if number[mid] == '0' and (number[mid+length] == '1' or number[mid-length] == '1'):
-        return True
-    if length <= 1:
-        return False
-    
-    result = False
-    result |= recur(number, mid + length, length // 2)
-    result |= recur(number, mid - length, length // 2)
-    return result
-    
+def check(string, left, right):
+    mid = (left + right) // 2
+    if len(string) <= 3:
+        if len(string) == 1:
+            return 1
+        elif string[mid] == '1':
+            return 1
+        elif string == '000':
+            return 0
+        else:
+            return -1
+    left = check(string[left:mid], 0, mid)
+    right = check(string[mid+1:right], 0, mid)
+    if left == -1 or right == -1:
+        return -1
+    if left == 0 and right == 0 and string[mid] == '0':
+        return 0
+    if (left == 1 and string[mid] == '0') or (right == 1 and string[mid] == '0'):
+        return -1
+    if string[mid] == '0':
+        return 0
+    else:
+        return 1
 def solution(numbers):
     answer = []
     for number in numbers:
-        number = getbinary(number)
-        result = False
-        for ind in range(len(number)//2+1):
-            if number[ind] == '1':
-                (num, length) = transform(number, ind)
-                if math.log(len(num) + 1, 2) % 1:
-                    continue
-                result |= not recur(num, length, length//2 + 1)
-        if result:
+        string = bin(number)[2:]
+        string = makeaTree(string)
+        result = check(string, 0, len(string))
+        if result != -1:
             answer.append(1)
         else:
             answer.append(0)
