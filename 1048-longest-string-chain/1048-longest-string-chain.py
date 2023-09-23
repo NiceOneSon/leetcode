@@ -9,7 +9,6 @@ class Solution:
         answer = 0
         for i in range(len(word)):
             newword = word[:i] + word[i+1:]
-            print(word, newword)
             if newword in s:
                 answer = max(answer, self.recursive(newword, cnt + 1))
         if answer:
