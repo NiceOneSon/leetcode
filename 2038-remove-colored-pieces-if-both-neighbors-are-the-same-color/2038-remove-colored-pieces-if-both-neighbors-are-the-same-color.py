@@ -2,13 +2,13 @@ from collections import Counter
 
 class Solution:
     def winnerOfGame(self, colors: str) -> bool:
-        A = []
-        B = []
+        A = 0
+        B = 0
         for i in range(2, len(colors)):
             if colors[i] == colors[i-1] == colors[i-2]:
                 if colors[i] == 'A':
-                    A.append(i)
+                    A += 1
                 else:
-                    B.append(i)
+                    B += 1
         
-        return len(A) > len(B)
+        return A > B
