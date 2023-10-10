@@ -5,10 +5,10 @@ class Solution:
         n = len(nums)
         answer = float("inf")
         nums = sorted(set(nums))
-        print(nums)
+        # print(nums)
         for i, val in enumerate(nums):
             e = bisect_left(nums, val + n)
-            print(i, val, e)
+            # print(i, val, e)
             answer = min(answer, n - e + i)
         return answer
     
