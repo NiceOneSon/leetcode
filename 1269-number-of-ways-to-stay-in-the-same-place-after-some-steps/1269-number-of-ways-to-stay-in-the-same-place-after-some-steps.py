@@ -2,7 +2,7 @@ class Solution:
     def numWays(self, steps: int, arrLen: int) -> int:
         from functools import lru_cache
         
-        @lru_cache(None)
+        @lru_cache(10**6)
         def recursive(pos, opp) -> int:
             if opp == 0:
                 if pos == 0:
