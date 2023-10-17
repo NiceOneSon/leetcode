@@ -1,35 +1,55 @@
-from collections import deque
-
 class Solution:
-	def validateBinaryTreeNodes(self, n, leftChild, rightChild):
-		# find the root node, assume root is node(0) by default
-		# a node without any parent would be a root node
-		# note: if there are multiple root nodes => 2+ trees
-		root = 0
-		childrenNodes = set(leftChild + rightChild)
-		for i in range(n):
-			if i not in childrenNodes:
-				root = i
-		
-		# keep track of visited nodes
-		visited = set()
-		# queue to keep track of in which order do we need to process nodes
-		queue = deque([root])
-		
-		while queue:
-			node = queue.popleft()
-			if node in visited:
-				return False
-			
-			# mark visited
-			visited.add(node)
-			
-			# process node
-			if leftChild[node] != -1:
-				queue.append(leftChild[node])
-			if rightChild[node] != -1:
-				queue.append(rightChild[node])
-				
-		# number of visited nodes == given number of nodes
-		# if n != len(visited) => some nodes are unreachable/multiple different trees
-		return len(visited) == n
+    def validateBinaryTreeNodes(self, n: int, leftChild: List[int], rightChild: List[int]) -> bool:
+        from collections import defaultdict
+        
+        recieves = defaultdict(int)
+        parent = [i for i in range(n+1)]
+        def find(p):
+            if p != parent[p]:
+                return find(parent[p])
+            return parent[p]
+        
+        def union(p1, p2):
+            p1 = find(p1)
+            p2 = find(p2)
+            
+            if p1 == p2:
+                return False
+            elif p1 < p2:
+                parent[p2] = p1
+            else:
+                parent[p1] = p2
+            return True
+        
+        
+        for node in range(n):
+            left, right = leftChild[node], rightChild[node]
+            # print(left, right)
+            result = True
+            if left >= 0:
+                # print(left)
+                recieves[left] += 1
+                result = union(left, node)
+            
+            if right >= 0:
+                # print(right)
+                recieves[right] += 1
+                result &= union(right, node)
+            
+            if result == False:
+                return False
+            
+        p = None
+        # print(recieves)
+        for node in range(n):
+            if p == None:
+                p = find(node)
+            elif p != find(node):
+                return False
+                
+            value = recieves[node]
+            if value > 1:
+                return False
+        
+        return True
+                
