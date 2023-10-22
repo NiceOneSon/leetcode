@@ -32,7 +32,7 @@ class Solution:
                     right += 1
                     # print(left, right, answer)
             else:
-                while left >= 0:
+                while left > 0:
                     goLeft, leftMinNum = move(True, result, minNum, left, right)
                     answer = max(answer, goLeft)
                     minNum = leftMinNum
