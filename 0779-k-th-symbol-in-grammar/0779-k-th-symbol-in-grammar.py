@@ -7,9 +7,3 @@ class Solution:
         if isLeft:
             return result
         return abs(result - 1)
-    
-
-#     0
-#     01
-#     0110
-#     01101001
