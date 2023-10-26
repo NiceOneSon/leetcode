@@ -27,6 +27,7 @@ class Solution:
                     result += tmp 
             return result
         
-        for num in arr[::-1]:
+        for ind in range(len(arr)-1, -1, -1):
+            num = arr[ind]
             answer += top_down(num)
         return answer % (10**9 + 7)
