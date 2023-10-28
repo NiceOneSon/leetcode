@@ -12,7 +12,7 @@ class Solution:
             ti = e + o
             to = i
             tu = o + i
-            if (result := recur(ta, te, ti, to, tu, n - 1)) > (10 ** 9 + 7):
-                return result % (10 ** 9 + 7)
-            return result
+            
+            return recur(ta, te, ti, to, tu, n - 1) % (10 ** 9 + 7)
+            
         return recur(1, 1, 1, 1, 1, goal)
