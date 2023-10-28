@@ -1,9 +1,5 @@
 class Solution:
     def countVowelPermutation(self, goal: int) -> int:
-        
-        from functools import lru_cache
-        
-        @lru_cache(None)
         def recur(a, e, i, o, u, n):
             if n == 1:
                 return a + e + i + o + u
@@ -12,7 +8,7 @@ class Solution:
             ti = e + o
             to = i
             tu = o + i
-            
-            return recur(ta, te, ti, to, tu, n - 1) % (10 ** 9 + 7)
-            
+            if (result := recur(ta, te, ti, to, tu, n - 1)) > (10 ** 9 + 7):
+                return recur(ta, te, ti, to, tu, n - 1) % (10 ** 9 + 7)
+            return result
         return recur(1, 1, 1, 1, 1, goal)
