@@ -3,7 +3,7 @@ class Solution:
         dp = [pref[0]]
 
         for val1, val2 in zip(pref[:-1], pref[1:]):
-            dp.append(val1^val2)
+            dp.append((val1 | val2) ^ (val1 & val2))
             
         return dp
       
@@ -18,7 +18,7 @@ class Solution:
         
 #         prev 0 1 0
         
-#         pref 0 0 0 1 1 1
+#         pref 0 0 0
         
 #         output 0 1 0 (2)
         
