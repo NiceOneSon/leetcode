@@ -6,8 +6,7 @@ class Solution:
             dp.append(val1^val2)
             
         return dp
-    
-        return arr    
+      
     
 #         prev 1 0 1
         
