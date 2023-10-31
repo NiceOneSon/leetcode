@@ -2,8 +2,8 @@ class Solution:
     def findArray(self, pref: List[int]) -> List[int]:
         dp = [pref[0]]
 
-        for val1, val2 in zip(pref[:-1], pref[1:]):
-            dp.append((val1 | val2) ^ (val1 & val2))
+        for i in range(1, len(pref)):
+            dp.append(pref[i]^pref[i-1])
             
         return dp
       
