@@ -6,7 +6,7 @@ class Solution:
         from collections import defaultdict
         d = defaultdict(int)
         base, other = 0, 1
-        while other < len(arr) and d[arr[base]] < k and d[arr[other]] < k:
+        while other < len(arr) and d[arr[base]] < k:
             if arr[base] < arr[other]:
                 base = other
             other += 1
