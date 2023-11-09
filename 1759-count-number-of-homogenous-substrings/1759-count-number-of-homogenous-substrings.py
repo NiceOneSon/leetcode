@@ -1,7 +1,8 @@
 class Solution:
     def countHomogenous(self, s: str, same = False) -> int:
         if same == True:
-            return (len(s) * (len(s) + 1))//2
+            n = len(s)
+            return n * (n+1) // 2
         
         answer = 0
         
