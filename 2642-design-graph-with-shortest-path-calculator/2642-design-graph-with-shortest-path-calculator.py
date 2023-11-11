@@ -23,10 +23,13 @@ class Graph:
             heapq.heappush(q, (self.graph[node1][other], other))
         while q:
             dist, node = heapq.heappop(q)
+            if node == node2:
+                continue
             for other in self.graph[node].keys():
                 if self.graph[node1][other] > self.graph[node][other] + dist:
                     heapq.heappush(q, (self.graph[node][other] + dist, other))
                     self.graph[node1][other] = self.graph[node][other] + dist
+                
                     
         if self.graph[node1][node2] == float('inf'):
             return -1
