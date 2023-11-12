@@ -24,7 +24,7 @@ class Graph:
         while q:
             dist, node = heapq.heappop(q)
             if node == node2:
-                continue
+                return dist
             for other in self.graph[node].keys():
                 if self.graph[node1][other] > self.graph[node][other] + dist:
                     heapq.heappush(q, (self.graph[node][other] + dist, other))
