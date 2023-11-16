@@ -20,11 +20,7 @@ class Solution:
             while len(string) < len(nums):
                 string += '0'
             return string[::-1]
-#         if len(nums) == 1:
-#             num = getNumber(nums[0])
-#             num = abs(num - 1)
-#             return getString(num)
-                
+
         s = set()
         
         for num in nums:
