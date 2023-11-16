@@ -20,10 +20,10 @@ class Solution:
             while len(string) < len(nums):
                 string += '0'
             return string[::-1]
-        if len(nums) == 1:
-            num = getNumber(nums[0])
-            num = abs(num - 1)
-            return getString(num)
+#         if len(nums) == 1:
+#             num = getNumber(nums[0])
+#             num = abs(num - 1)
+#             return getString(num)
                 
         s = set()
         
@@ -31,6 +31,6 @@ class Solution:
             num = getNumber(num)
             s.add(num)
         
-        for num in range(1, 1 << len(nums)):
+        for num in range(1 << len(nums)):
             if num not in s:
                 return getString(num)
