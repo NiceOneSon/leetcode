@@ -1,4 +1,3 @@
-import heapq
 from collections import defaultdict
 
 class Solution:
@@ -6,19 +5,19 @@ class Solution:
         q = []
         nums_count_dict = defaultdict(int)
         
-        for num in nums: 
+        for num in nums:
             nums_count_dict[num] += 1
         
-        for key, val in nums_count_dict.items():
-            heapq.heappush(q, (-key, val))
-
+        nums_set_list = sorted(set([num for num in nums_count_dict.keys()]))
+        
+        nums_index_dict = {}
+        
+        for index, num in enumerate(nums_set_list):
+            nums_index_dict[num] = index
+        
         answer = 0
-        while len(q) > 1:
-            _, val = heapq.heappop(q)
-            next_minus_key, next_val = heapq.heappop(q)
-            
-            answer += val
-            next_val += val
-            heapq.heappush(q, (next_minus_key, next_val))
+        
+        for key, val in nums_count_dict.items():
+            answer += nums_index_dict[key] * val
         
         return answer
