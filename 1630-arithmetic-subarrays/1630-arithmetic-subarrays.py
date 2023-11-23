@@ -3,6 +3,9 @@ import heapq
 class Solution:
 
     def fillOutQueue(q : list) -> bool:
+        if len(q) == 1:
+            return True
+        
         left, right = heapq.heappop(q), heapq.heappop(q)
         diff = right - left
 
@@ -30,10 +33,6 @@ class Solution:
             fromIdx, toIdx = l[idx], r[idx]
             
             q = Solution.fillUpQueue(fromIdx, toIdx, nums)
-            
-            if len(q) == 1:
-                answer.append(True)
-                continue
             
             isArithmetic = Solution.fillOutQueue(q)
             answer.append(isArithmetic)
