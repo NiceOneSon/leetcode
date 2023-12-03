@@ -22,12 +22,11 @@ class Solution:
                     result.append(string)
                 return dfs(idx + 1, result)
             
-            else:
-                tmpResult = []
-                for string in numToString[digits[idx]]:
-                    for resultString in result:
-                        tmpResult.append(resultString + string)
-                return dfs(idx + 1, tmpResult)
+            tmpResult = []
+            for string in numToString[digits[idx]]:
+                for resultString in result:
+                    tmpResult.append(resultString + string)
+            return dfs(idx + 1, tmpResult)
             
             
         return dfs(0, [])
