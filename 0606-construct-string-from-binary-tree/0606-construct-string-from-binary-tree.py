@@ -5,29 +5,32 @@
 #         self.left = left
 #         self.right = right
 
+
+
 class Solution:
+    def unionString(self, leftResult:Optional[str], rightResult:Optional[str]) -> str:
+        if leftResult and rightResult:
+            return f'({leftResult})({rightResult})'
+        
+        if leftResult:
+            return f'({leftResult})'
+        
+        if rightResult:
+            return f'()({rightResult})'
+        
+        return ''
+        
+        
     def tree2str(self, root: Optional[TreeNode]) -> str:
         answer = str(root.val)
+        leftResult, rightResult = None, None
         
-        resultLeft, resultRight = None, None
+        if root.left:
+            leftResult = self.tree2str(root.left)
+            
+        if root.right:
+            rightResult = self.tree2str(root.right)
         
-        if root.left and isinstance(root.left.val, int):
-            resultLeft = self.tree2str(root.left)
+        stringResult = self.unionString(leftResult, rightResult)
         
-        if root.right and isinstance(root.right.val, int):
-            resultRight = self.tree2str(root.right)
-             
-        
-        if resultLeft and resultRight:
-            answer += '(' + resultLeft + ')'
-            answer += '(' + resultRight + ')'
-        
-        elif resultLeft:
-            answer += '(' + resultLeft + ')'
-        
-        elif resultRight:
-            answer += '()'
-            answer += '(' + resultRight + ')'
-        
-        return answer
-        
+        return answer + stringResult
