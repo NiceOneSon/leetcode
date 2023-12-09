@@ -6,20 +6,21 @@
 #         self.right = right
 
 class Solution:
-    def travel(self, root: Optional[TreeNode], answer):
+    
+    def travelInorder(self, root: Optional[TreeNode], answer) -> None:
         if root.left:
-            self.travel(root.left, answer)
+            self.travelInorder(root.left, answer)
         
         answer.append(root.val)
         
         if root.right:
-            self.travel(root.right, answer)
+            self.travelInorder(root.right, answer)
         
     
     def inorderTraversal(self, root: Optional[TreeNode]) -> List[int]:
         answer = []
         
         if root:
-            self.travel(root, answer)
+            self.travelInorder(root, answer)
             
         return answer
