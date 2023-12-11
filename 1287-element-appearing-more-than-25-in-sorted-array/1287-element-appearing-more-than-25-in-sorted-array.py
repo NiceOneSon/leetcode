@@ -8,4 +8,3 @@ class Solution:
             number_of_count[number] += 1
             if number_of_count[number] > threshold:
                 return number
-        return answer
