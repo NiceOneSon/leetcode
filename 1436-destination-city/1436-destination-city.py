@@ -1,16 +1,10 @@
 class Solution:
     def destCity(self, paths: List[List[str]]) -> str:
-        from collections import defaultdict
-        
-        destinations = defaultdict(str)
-        
-        for begin, end in paths:
-            destinations[begin] = end
-        
-        
-        begin = paths[0][1]
-        while destinations[begin]:
-            end = destinations[begin]
-            begin = end
-        
-        return begin
+        path_dicts = dict(paths)
+
+        for start, dest in path_dicts.items():
+            while dest in path_dicts:
+                start = dest
+                dest = path_dicts[start]
+            else:
+                return dest
