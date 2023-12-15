@@ -14,4 +14,3 @@ class Solution:
             begin = end
         
         return begin
-            
