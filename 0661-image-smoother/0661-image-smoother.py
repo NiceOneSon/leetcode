@@ -2,7 +2,6 @@ class Solution:
     def getPoint(self, y: int, x: int, img: List[List[int]]) -> int:
         total = 0
         cnt = 0
-        
         for dy in range(-1, 2):
             for dx in range(-1, 2):
                 sy, sx = y + dy, x + dx
