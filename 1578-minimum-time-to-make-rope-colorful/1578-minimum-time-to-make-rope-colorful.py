@@ -22,4 +22,3 @@ class Solution:
                 answer += neededTime[right]
                       
         return answer
-
