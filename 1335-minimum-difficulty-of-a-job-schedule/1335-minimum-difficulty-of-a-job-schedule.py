@@ -6,8 +6,8 @@ class Solution:
         
         if remain > len(jobDifficulty):
             return -1
-        
-        @lru_cache(None)
+        length = len(jobDifficulty)
+        @lru_cache(length ** 2)
         def recursive(left: int, right: int, d: int, maxval: int):
             if d == 0:
                 if right == len(jobDifficulty):
