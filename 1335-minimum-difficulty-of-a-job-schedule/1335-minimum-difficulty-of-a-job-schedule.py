@@ -16,7 +16,7 @@ class Solution:
                 DP[i][j] = maxval
             
         # print(DP)
-        @lru_cache(None)
+        @lru_cache(len(jobDifficulty) ** 2 * remain)
         def recursive(left: int, right: int, d: int):
             if d == 0:
                 if right == len(jobDifficulty):
