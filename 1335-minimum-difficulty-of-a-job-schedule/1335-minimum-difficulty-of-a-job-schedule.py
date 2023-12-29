@@ -7,31 +7,26 @@ class Solution:
         if remain > len(jobDifficulty):
             return -1
         
-        DP = [[0] * (len(jobDifficulty)) for _ in range(len(jobDifficulty))]
-        for i in range(len(jobDifficulty)):
-            maxval = jobDifficulty[i]
-            DP[i][i] = maxval
-            for j in range(i, len(jobDifficulty)):
-                maxval = max(maxval, jobDifficulty[j])
-                DP[i][j] = maxval
-            
-        # print(DP)
-        @lru_cache(len(jobDifficulty) ** 2 * remain)
-        def recursive(left: int, right: int, d: int):
+        @lru_cache(None)
+        def recursive(left: int, right: int, d: int, maxval: int):
             if d == 0:
                 if right == len(jobDifficulty):
-                    if right == left:
-                        return 0
-                    return DP[left][right-1]
+                    return maxval if maxval else 0
                 else:
                     return INF
             
             if right >= len(jobDifficulty):
                 return INF
             
+            if maxval == None:
+                maxval = jobDifficulty[left]
+            
             answer = INF
-            answer = min(answer, recursive(left, right + 1, d))
-            answer = min(answer, recursive(right+1, right+1, d - 1) + DP[left][right])
+            answer = min(answer, recursive(left, right + 1, d, max(maxval, jobDifficulty[right])))
+            answer = min(answer, recursive(right+1, right+1, d - 1, None) + max(maxval, jobDifficulty[right]))
             
             return answer
-        return recursive(0, 0, remain)
+        
+        return recursive(0, 0, remain, None)
+        
+                        
