@@ -12,7 +12,6 @@ class Solution:
         
         
         dy, dx = (-1, -1, -1), (-1, 0, 1)
-        print(answer)
         for yi in range(1, y):
             for xi in range(x):
                 for i in range(3):
