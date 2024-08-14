@@ -1,5 +1,3 @@
-from bisect import bisect_left
-
 class Solution:
     def get_result(self, number: int, nums: List[int]) -> int:
         left = 0
@@ -18,7 +16,7 @@ class Solution:
         
         while left < right:
             number = (left + right) // 2 # distance
-            result = self.get_result(number = number, nums = nums) #
+            result = self.get_result(number = number, nums = nums)
             if result < k:
                 left = number + 1
             else:
