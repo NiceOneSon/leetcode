@@ -9,4 +9,3 @@ class Solution:
             answer = max(answer, l_max_distance)
             g_min_val, g_max_val = min(g_min_val, min_val), max(g_max_val, max_val)
         return answer
-            
