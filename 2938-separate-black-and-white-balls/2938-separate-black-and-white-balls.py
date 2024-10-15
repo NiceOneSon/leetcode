@@ -1,15 +1,15 @@
 class Solution:    
     def minimumSteps(self, s: str) -> int:
-        stack = []
+        zero_cnt = 0
         idx = len(s) - 1
         t_cnt = s.count('1')
         answer = 0
         
         for _ in range(t_cnt):
             while s[idx] == '0':
-                stack.append(True)
+                zero_cnt += 1
                 idx -= 1
-            answer += len(stack)
+            answer += zero_cnt
             idx -= 1
             
         return answer
