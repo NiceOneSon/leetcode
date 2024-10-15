@@ -1,19 +1,16 @@
 class Solution:    
     def minimumSteps(self, s: str) -> int:
-        l, r = len(s)-1, len(s)-1
-        answer = 0 
-        s = list(s)
+        stack = []
+        idx = len(s) - 1
+        t_cnt = s.count('1')
+        answer = 0
         
-        while l > 0:
-            while r >= 0 and s[r] == '1':
-                r -= 1
+        for _ in range(t_cnt):
+            while s[idx] == '0':
+                stack.append(True)
+                idx -= 1
+            answer += len(stack)
+            idx -= 1
             
-            while l >= 0 and (l >= r or s[l] == '0'):
-                l -= 1
-
-            if l < 0:
-                return answer
-            
-            answer += r - l
-            s[l], s[r] = s[r], s[l]
         return answer
+            
