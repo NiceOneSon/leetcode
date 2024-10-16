@@ -16,7 +16,7 @@ class Solution:
                 _n, _alphabet = heapq.heappop(q)
                 heapq.heappush(q, (n, alphabet))
                 n, alphabet = _n, _alphabet
-            if n >= 0:
+            if n == 0:
                 continue
             s.append(alphabet)
             heapq.heappush(q, (n+1, alphabet))
