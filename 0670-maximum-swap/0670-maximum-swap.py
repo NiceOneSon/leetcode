@@ -1,26 +1,25 @@
 class Solution:
     def maximumSwap(self, num: int) -> int:
-        snum = str(num)
-        lnum = list(snum)
+        q = []
+        pnts = []
         
-        length = len(lnum)
-        dp = [length - 1 for i in range(length)]
+        while num:
+            n = num % 10
+            num //= 10
+            pnt = len(pnts)
+            if not q:
+                pnt = 0
+            elif n <= q[pnts[-1]]:
+                pnt = pnts[-1]
+            q.append(n)
+            pnts.append(pnt)
         
-        for curr_idx in range(length-2, -1, -1):
-            right_idx = curr_idx + 1
-            right_pnt = dp[right_idx]
-            curr_pnt = curr_idx
-            if lnum[curr_pnt] <= lnum[right_pnt]:
-                curr_pnt = right_pnt
-            dp[curr_idx] = curr_pnt
-        
-        for curr_idx in range(length):
-            pnt = dp[curr_idx]
-            if lnum[curr_idx] < lnum[pnt]:
-                lnum[curr_idx], lnum[pnt] = lnum[pnt], lnum[curr_idx]
+        for idx in range(len(q)-1, -1, -1):
+            pnt = pnts[idx]
+            if q[idx] < q[pnt]:
+                q[idx], q[pnt] = q[pnt], q[idx]
                 break
-            
-        return int(''.join(lnum))
-            
-                
-            
+        answer = 0
+        for pnt in range(len(q)):
+            answer += q[pnt] * 10 ** pnt
+        return answer
