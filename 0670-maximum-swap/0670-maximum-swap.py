@@ -19,6 +19,7 @@ class Solution:
             if q[idx] < q[pnt]:
                 q[idx], q[pnt] = q[pnt], q[idx]
                 break
+                
         answer = 0
         for pnt in range(len(q)):
             answer += q[pnt] * 10 ** pnt
