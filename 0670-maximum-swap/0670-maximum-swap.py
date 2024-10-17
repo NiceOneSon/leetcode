@@ -6,15 +6,15 @@ class Solution:
                 q[idx], q[pnt] = q[pnt], q[idx]
                 break
     
-    def value_return(self, q, pnts):
+    def make_to_number(self, q, pnts):
         answer = 0
         for pnt in range(len(q)):
             answer += q[pnt] * 10 ** pnt
         return answer
     
-    def swap_and_return(self, q, pnts):
+    def return_maximum_value(self, q, pnts):
         self.swap(q = q, pnts = pnts)    
-        return self.value_return(q, pnts)
+        return self.make_to_number(q, pnts)
         
     def maximumSwap(self, num: int) -> int:
         q = []
@@ -31,7 +31,4 @@ class Solution:
             q.append(n)
             pnts.append(pnt)
         
-        return self.swap_and_return(q, pnts)
-        
-        
-        
+        return self.return_maximum_value(q, pnts)
