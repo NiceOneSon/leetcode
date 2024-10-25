@@ -5,11 +5,12 @@ class Solution:
         folders.sort()
         
         stack = []
+        
         def is_same(f: string):
             _f = stack[-1]
             f_s = f.split("/")
             _f_s = _f.split("/")
-            for i in range(min(len(f_s), len(_f_s))):
+            for i in range(len(_f_s)):
                 if f_s[i] != _f_s[i]:
                     return False
             return True
