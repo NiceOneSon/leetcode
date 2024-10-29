@@ -27,5 +27,4 @@ class Solution:
                     
                     dp[cy][cx] = max(dp[cy][cx], dp[y][x] + 1)
                     answer = max(answer, dp[cy][cx])
-        print(dp)
         return answer
